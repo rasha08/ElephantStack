@@ -1,0 +1,10 @@
+
+<div>{{ user.firstName  }}</div>
+<div>{{ user.lastName }}</div>
+<div>{{ user.email }}</div>
+<div>{{ user.role }}</div>
+<div>
+  <div (click)="editUser()">edit</div>
+  <div (click)="removeUser.emit(user.id)">remove</div>
+</div>
+

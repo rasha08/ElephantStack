@@ -1,0 +1,6 @@
+<app-list-filters></app-list-filters>
+<div class="app-user-list">
+  <app-list-header class="app-user-list-header"></app-list-header>
+  <app-single-user-row *ngFor="let user of users$ | async | applyFilter: filter" class="app-user-list-item" [user]="user" (removeUser)="removeUser($event)">
+  </app-single-user-row>
+</div>

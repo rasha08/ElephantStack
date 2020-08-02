@@ -1,0 +1,16 @@
+<div class="app-user-list-filter">
+  <div class="app-user-list-filter-role">
+    <label for="role">Role </label>
+    <select id="role" (change)="setRole($event)" [(ngModel)]="filter.role">
+      <option value="">None</option>
+      <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+    </select>
+  </div>
+
+  <div class="app-user-list-filter-search">
+    <input type="text"  [(ngModel)]="searchTerm" />
+    <div (click)="setQuery()">search</div>
+  </div>
+</div>
+
+

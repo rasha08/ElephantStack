@@ -1,0 +1,33 @@
+.app-user-list {
+  box-shadow: 1px 1px 1px 1px lightcoral;
+  display: grid;
+  margin: 3rem;
+
+  &-header {
+    min-height: 50px;
+    align-items: center;
+    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    font-weight: bold;
+    justify-items: center;
+  }
+
+  &-item {
+    display: grid;
+    align-items: center;
+    min-height: 80px;
+    border-bottom: 1px solid lightcoral;
+    grid-template-columns: repeat(5, 1fr);
+    justify-items: center;
+    &:nth-child(even) {
+      background-color: rgba(220, 0, 0, .05);
+    }
+    &:nth-child(odd) {
+      background-color: rgba(220, 0, 0, .01);
+    }
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}

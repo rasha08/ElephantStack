@@ -1,0 +1,46 @@
+.app-user-form {
+  .error-banner {
+    margin: 1rem 10rem;
+    padding: 1rem;
+    color: snow;
+    background: firebrick;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+  form {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin: 3rem 6rem;
+
+    label {
+      min-width: 20vw;
+      padding: 0 2rem;
+    }
+
+    input, select {
+      margin: 0 2rem 2rem;
+      padding: 0.5rem;
+    }
+
+    .error {
+      padding: 0 2rem;
+      color: firebrick;
+    }
+
+    button {
+      margin: 0 2rem 2rem;
+      padding: 1rem;
+      background-color: lightcoral;
+      outline: none;
+      border: none;
+      color: snow;
+      font-size: 1.2rem;
+      font-weight: bold;
+      &:disabled {
+        background-color: lightgray;
+        cursor: not-allowed;
+      }
+    }
+  }
+}

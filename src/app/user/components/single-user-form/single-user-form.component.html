@@ -1,0 +1,31 @@
+<div class="app-user-form">
+  <div class="error-banner" [hidden]="!error">{{ error }}</div>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+    <label>
+      First Name:
+    </label>
+    <span class="error" [hidden]="!userForm.get('firstName').invalid">Firstname is Required</span>
+    <input type="text" formControlName="firstName">
+
+    <label>
+      Last Name:
+    </label>
+    <span class="error" [hidden]="!userForm.get('lastName').invalid">Lastname  is Required</span>
+    <input type="text" formControlName="lastName">
+
+    <label [hidden]="!!userId">
+      Email:
+    </label>
+    <span class="error" [hidden]="!userForm.get('email').invalid || !!userId">Email is invalid</span>
+    <input type="email" formControlName="email" [hidden]="!!userId">
+
+      <label for="role">Role </label>
+      <select id="role" formControlName="role">
+        <option value="">None</option>
+        <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+      </select>
+
+    <button type="submit" [disabled]="userForm.invalid || submitting">Save</button>
+  </form>
+</div>

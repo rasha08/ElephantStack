@@ -1,0 +1,38 @@
+import express, { Application } from 'express';
+import bodyParser from 'body-parser';
+import { config as configEnvironment } from 'dotenv';
+import cors from 'cors';
+
+import connect from './connect';
+import * as UserController from './controllers/user-controller';
+import { createUserValidations, updateUserValidations } from './validation/userValidatiors';
+import { handleValidationErrors } from '../dist/server/src/middlewares/handleValidationErrors';
+import { resourceIdValidator } from './validation/resourceIdValidator';
+
+configEnvironment();
+
+const app: Application = express();
+const port: number = +(process.env.PORT || 5000);
+
+console.log('Connecting to DB ' + process.env.DB);
+connect(process.env.DB || 'elephantstock');
+
+app.listen(port, () => {
+  console.log(`Server running on ${port}`);
+});
+
+app.use(bodyParser.json());
+app.use(cors());
+app.get('/users', UserController.listUsers);
+
+app.get('/users/:id', UserController.showUser);
+
+app.post('/users', [...createUserValidations, handleValidationErrors], UserController.addUser);
+
+app.patch(
+  '/users/:id',
+  [resourceIdValidator('User'), ...updateUserValidations, handleValidationErrors],
+  UserController.updateUser
+);
+
+app.delete('/users/:id', [resourceIdValidator('User'), handleValidationErrors], UserController.deleteUser);
