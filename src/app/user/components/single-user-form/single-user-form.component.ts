@@ -5,6 +5,7 @@ import { User } from '../../../shared/models/User';
 import { UserService } from '../../services/user.service';
 import { Role } from '../../../../../shared/enums/Role';
 import { tap } from 'rxjs/operators';
+import { emailRegex } from '../../../../../shared/utils/emailRegex';
 
 @Component({
   selector: 'app-single-user-form',
@@ -15,9 +16,9 @@ export class SingleUserFormComponent {
   userId?: string;
   roles: Role[] = Object.keys(Role) as Role[];
   userForm = new FormGroup({
-    firstName: new FormControl('', [Validators.required, Validators.minLength(2)]),
-    lastName: new FormControl('', [Validators.required, Validators.minLength(2)]),
-    email: new FormControl('', [Validators.email, Validators.required]),
+    firstName: new FormControl('', [Validators.required, Validators.minLength(2), Validators.pattern(/[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,}$/)]),
+    lastName: new FormControl('', [Validators.required, Validators.minLength(2), Validators.pattern(/[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,}$/)]),
+    email: new FormControl('', [Validators.pattern(emailRegex), Validators.required]),
     role: new FormControl(null, [Validators.required]),
   });
   error?: string;
@@ -32,31 +33,26 @@ export class SingleUserFormComponent {
     });
   }
 
+  handleError({ message }: { message: string }) {
+    this.submitting = false;
+    this.error = message;
+  }
+
   onSubmit() {
     if (!this.userForm.invalid && this.userForm.dirty) {
       this.submitting = true;
       if (this.userId) {
         this.userService.update(this.userId, this.userForm.value).subscribe(
           () => this.goToUserList(),
-          ({ error }) => {
-            this.submitting = false;
-            this.error = error.message;
-          }
+          ({ error }) => this.handleError(error)
         );
       } else {
         this.userService.create(this.userForm.value).subscribe(
           () => this.goToUserList(),
-          ({ error }) => {
-            this.submitting = false;
-            this.error = error.message;
-          }
+          ({ error }) => this.handleError(error)
         );
       }
     }
-  }
-
-  debug(val) {
-    return JSON.stringify(val, null, 2);
   }
 
   private goToUserList() {

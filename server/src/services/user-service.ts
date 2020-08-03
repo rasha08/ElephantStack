@@ -32,9 +32,11 @@ export const show = (userId: string) => {
 
 export const create = async (user: IUser) => {
   return new Promise(async (res, rej) => {
-    const artManager = await User.findOne({ role: Role.ArtManager });
-    if (!!artManager) {
-      rej(new Error(`User with role ${Role.ArtManager} already exists!`));
+    if (user.role === Role.ArtManager) {
+      const artManager = await User.findOne({ role: Role.ArtManager });
+      if (!!artManager) {
+        return rej(new Error(`User with role ${Role.ArtManager} already exists!`));
+      }
     }
 
     User.create(user, (err: any, u: unknown | UserInterface) => {
@@ -54,9 +56,11 @@ export const create = async (user: IUser) => {
 
 export const update = async (id: string, user: IUser) => {
   return new Promise(async (res, rej) => {
-    const artManager = await User.findOne({ role: Role.ArtManager });
-    if (artManager && artManager._id.toString() !== id) {
-      rej(new Error(`User with role ${Role.ArtManager} already exists!`));
+    if (user.role === Role.ArtManager) {
+      const artManager = await User.findOne({ role: Role.ArtManager });
+      if (artManager && artManager._id.toString() !== id) {
+        return rej(new Error(`User with role ${Role.ArtManager} already exists!`));
+      }
     }
 
     User.findByIdAndUpdate(id, new UpdateUserDTO(user), { new: true }, (err: any, u: unknown | UserInterface) => {

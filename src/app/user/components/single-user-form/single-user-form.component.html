@@ -1,30 +1,38 @@
 <div class="app-user-form">
-  <div class="error-banner" [hidden]="!error">{{ error }}</div>
+  <div class="error-banner" [hidden]="!error">OOPS: {{ error }}</div>
   <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-
     <label>
       First Name:
     </label>
-    <span class="error" [hidden]="!userForm.get('firstName').invalid">Firstname is Required</span>
-    <input type="text" formControlName="firstName">
+    <ng-template [ngIf]="userForm.get('firstName').touched">
+      <app-validation-error [error]="userForm.get('firstName').errors" label="Firstname"></app-validation-error>
+    </ng-template>
+    <input type="text" formControlName="firstName" />
 
     <label>
       Last Name:
     </label>
-    <span class="error" [hidden]="!userForm.get('lastName').invalid">Lastname  is Required</span>
-    <input type="text" formControlName="lastName">
+    <ng-template [ngIf]="userForm.get('lastName').touched">
+      <app-validation-error [error]="userForm.get('lastName').errors" label="Lastname"></app-validation-error>
+    </ng-template>
+    <input type="text" formControlName="lastName" />
 
     <label [hidden]="!!userId">
       Email:
     </label>
-    <span class="error" [hidden]="!userForm.get('email').invalid || !!userId">Email is invalid</span>
-    <input type="email" formControlName="email" [hidden]="!!userId">
+    <ng-template [ngIf]="userForm.get('email').touched">
+      <app-validation-error [error]="userForm.get('email').errors" label="Email"></app-validation-error>
+    </ng-template>
+    <input type="email" formControlName="email" [hidden]="!!userId" />
 
-      <label for="role">Role </label>
-      <select id="role" formControlName="role">
-        <option value="">None</option>
-        <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
-      </select>
+    <label for="role">Role </label>
+    <ng-template [ngIf]="userForm.get('role').touched">
+      <app-validation-error [error]="userForm.get('role').errors" label="Role"></app-validation-error>
+    </ng-template>
+    <select id="role" formControlName="role">
+      <option value="">None</option>
+      <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+    </select>
 
     <button type="submit" [disabled]="userForm.invalid || submitting">Save</button>
   </form>

@@ -5,13 +5,16 @@
 
   &-role {
     label {
-      background-color: rgba(220, 0, 0, .1);
+      background-color: lightcoral;
+     color: snow;
       padding: 0.7rem;
     }
 
     select {
       padding: 0.5rem;
       min-width: 30vw;
+      border: 1px solid rgba(220, 0, 0, .3) !important;
+      outline: none;
     }
   }
 
@@ -22,6 +25,8 @@
     input {
       padding: 0.5rem;
       min-width: 30vw;
+      border: 1px solid rgba(220, 0, 0, .3) !important;
+      outline: none;
     }
 
     div {

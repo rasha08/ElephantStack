@@ -8,6 +8,7 @@ import * as UserController from './controllers/user-controller';
 import { createUserValidations, updateUserValidations } from './validation/userValidatiors';
 import { handleValidationErrors } from '../dist/server/src/middlewares/handleValidationErrors';
 import { resourceIdValidator } from './validation/resourceIdValidator';
+import path from 'path';
 
 configEnvironment();
 
@@ -23,16 +24,17 @@ app.listen(port, () => {
 
 app.use(bodyParser.json());
 app.use(cors());
+app.use(express.static(path.resolve( '../dist/elephantstock')));
+app.get('/', (req, res) => {
+  res.sendFile(path.resolve('../dist/elephantstock/index.html'));
+});
+
 app.get('/users', UserController.listUsers);
-
 app.get('/users/:id', UserController.showUser);
-
 app.post('/users', [...createUserValidations, handleValidationErrors], UserController.addUser);
-
 app.patch(
   '/users/:id',
   [resourceIdValidator('User'), ...updateUserValidations, handleValidationErrors],
   UserController.updateUser
 );
-
 app.delete('/users/:id', [resourceIdValidator('User'), handleValidationErrors], UserController.deleteUser);

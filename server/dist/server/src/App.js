@@ -31,6 +31,7 @@ const UserController = __importStar(require("./controllers/user-controller"));
 const userValidatiors_1 = require("./validation/userValidatiors");
 const handleValidationErrors_1 = require("../dist/server/src/middlewares/handleValidationErrors");
 const resourceIdValidator_1 = require("./validation/resourceIdValidator");
+const path_1 = __importDefault(require("path"));
 dotenv_1.config();
 const app = express_1.default();
 const port = +(process.env.PORT || 5000);
@@ -41,9 +42,13 @@ app.listen(port, () => {
 });
 app.use(body_parser_1.default.json());
 app.use(cors_1.default());
-app.get("/users", UserController.listUsers);
-app.get("/users/:id", UserController.showUser);
-app.post("/users", [...userValidatiors_1.createUserValidations, handleValidationErrors_1.handleValidationErrors], UserController.addUser);
-app.patch("/users/:id", [resourceIdValidator_1.resourceIdValidator('User'), ...userValidatiors_1.updateUserValidations, handleValidationErrors_1.handleValidationErrors], UserController.updateUser);
-app.delete("/users/:id", [resourceIdValidator_1.resourceIdValidator('User'), handleValidationErrors_1.handleValidationErrors], UserController.deleteUser);
+app.use(express_1.default.static(path_1.default.resolve('../dist/elephantstock')));
+app.get('/', (req, res) => {
+    res.sendFile(path_1.default.resolve('../dist/elephantstock/index.html'));
+});
+app.get('/users', UserController.listUsers);
+app.get('/users/:id', UserController.showUser);
+app.post('/users', [...userValidatiors_1.createUserValidations, handleValidationErrors_1.handleValidationErrors], UserController.addUser);
+app.patch('/users/:id', [resourceIdValidator_1.resourceIdValidator('User'), ...userValidatiors_1.updateUserValidations, handleValidationErrors_1.handleValidationErrors], UserController.updateUser);
+app.delete('/users/:id', [resourceIdValidator_1.resourceIdValidator('User'), handleValidationErrors_1.handleValidationErrors], UserController.deleteUser);
 //# sourceMappingURL=App.js.map

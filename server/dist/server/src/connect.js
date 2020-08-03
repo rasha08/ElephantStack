@@ -11,12 +11,12 @@ exports.default = (db) => {
             .then(() => {
             return console.log(`Successfully connected to ${db}`);
         })
-            .catch(error => {
-            console.log("Error connecting to database: ", error);
+            .catch((error) => {
+            console.log('Error connecting to database: ', error);
             return process.exit(1);
         });
     };
     connect();
-    mongoose_1.default.connection.on("disconnected", connect);
+    mongoose_1.default.connection.on('disconnected', connect);
 };
 //# sourceMappingURL=connect.js.map

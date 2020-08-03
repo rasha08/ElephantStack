@@ -26,8 +26,8 @@ const UserSchema = new mongoose_1.Schema({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     email: { type: String, required: true, unique: true, validate: (value) => emailRegex_1.emailRegex.test(value) },
-    role: { type: String, required: true, validate: (value) => value in Role_1.Role }
+    role: { type: String, required: true, validate: (value) => value in Role_1.Role },
 });
-const User = mongoose_1.default.model("User", UserSchema);
+const User = mongoose_1.default.model('User', UserSchema);
 exports.default = User;
 //# sourceMappingURL=User.js.map

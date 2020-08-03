@@ -24,7 +24,7 @@ exports.list = () => __awaiter(void 0, void 0, void 0, function* () {
                 rej(err);
             }
             else {
-                res(users.map(u => (new UserDTO_1.UserDTO(u))));
+                res(users.map((u) => new UserDTO_1.UserDTO(u)));
             }
         });
     });
@@ -46,9 +46,11 @@ exports.show = (userId) => {
 };
 exports.create = (user) => __awaiter(void 0, void 0, void 0, function* () {
     return new Promise((res, rej) => __awaiter(void 0, void 0, void 0, function* () {
-        const artManager = yield User_1.default.findOne({ role: Role_1.Role.ArtManager });
-        if (!!artManager) {
-            rej(new Error(`User with role ${Role_1.Role.ArtManager} already exists!`));
+        if (user.role === Role_1.Role.ArtManager) {
+            const artManager = yield User_1.default.findOne({ role: Role_1.Role.ArtManager });
+            if (!!artManager) {
+                return rej(new Error(`User with role ${Role_1.Role.ArtManager} already exists!`));
+            }
         }
         User_1.default.create(user, (err, u) => {
             if (err) {
@@ -68,9 +70,11 @@ exports.create = (user) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.update = (id, user) => __awaiter(void 0, void 0, void 0, function* () {
     return new Promise((res, rej) => __awaiter(void 0, void 0, void 0, function* () {
-        const artManager = yield User_1.default.findOne({ role: Role_1.Role.ArtManager });
-        if (artManager && artManager._id.toString() !== id) {
-            rej(new Error(`User with role ${Role_1.Role.ArtManager} already exists!`));
+        if (user.role === Role_1.Role.ArtManager) {
+            const artManager = yield User_1.default.findOne({ role: Role_1.Role.ArtManager });
+            if (artManager && artManager._id.toString() !== id) {
+                return rej(new Error(`User with role ${Role_1.Role.ArtManager} already exists!`));
+            }
         }
         User_1.default.findByIdAndUpdate(id, new UpdateUserDTO_1.UpdateUserDTO(user), { new: true }, (err, u) => {
             if (err) {

@@ -11,6 +11,7 @@ import { ListHeaderComponent } from './components/list/components/list-header/li
 import { ListFiltersComponent } from './components/list/components/list-filters/list-filters.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SingleUserResolver } from './resolvers/single-user.resolver';
+import { ValidationErrorComponent } from './components/single-user-form/components/validation-error/validation-error.component';
 
 @NgModule({
   declarations: [
@@ -20,8 +21,9 @@ import { SingleUserResolver } from './resolvers/single-user.resolver';
     ApplyFilterPipe,
     ListHeaderComponent,
     ListFiltersComponent,
+    ValidationErrorComponent,
   ],
   imports: [CommonModule, UserRoutingModule, FormsModule, ReactiveFormsModule],
-  providers: [UserService, UserFilterService, ApplyFilterPipe, SingleUserResolver],
+  providers: [UserService, UserFilterService, SingleUserResolver],
 })
 export class UserModule {}

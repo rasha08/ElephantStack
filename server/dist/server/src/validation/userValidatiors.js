@@ -21,10 +21,7 @@ const nameValidator = (label) => (value) => {
 exports.updateUserValidations = [
     express_validator_1.body('firstName').custom(nameValidator('First Name')),
     express_validator_1.body('lastName').custom(nameValidator('Last Name')),
-    express_validator_1.body('role').custom(roleValidator)
+    express_validator_1.body('role').custom(roleValidator),
 ];
-exports.createUserValidations = [
-    ...exports.updateUserValidations,
-    express_validator_1.body('email').isEmail(),
-];
+exports.createUserValidations = [...exports.updateUserValidations, express_validator_1.body('email').isEmail()];
 //# sourceMappingURL=userValidatiors.js.map
