@@ -43,12 +43,12 @@ app.listen(port, () => {
 app.use(body_parser_1.default.json());
 app.use(cors_1.default());
 app.use(express_1.default.static(path_1.default.resolve('../dist/elephantstock')));
-app.get('/', (req, res) => {
+app.get('/api/users', UserController.listUsers);
+app.get('/api/users/:id', UserController.showUser);
+app.post('/api/users', [...userValidatiors_1.createUserValidations, handleValidationErrors_1.handleValidationErrors], UserController.addUser);
+app.patch('/api/users/:id', [resourceIdValidator_1.resourceIdValidator('User'), ...userValidatiors_1.updateUserValidations, handleValidationErrors_1.handleValidationErrors], UserController.updateUser);
+app.delete('/api/users/:id', [resourceIdValidator_1.resourceIdValidator('User'), handleValidationErrors_1.handleValidationErrors], UserController.deleteUser);
+app.get('/*', (req, res) => {
     res.sendFile(path_1.default.resolve('../dist/elephantstock/index.html'));
 });
-app.get('/users', UserController.listUsers);
-app.get('/users/:id', UserController.showUser);
-app.post('/users', [...userValidatiors_1.createUserValidations, handleValidationErrors_1.handleValidationErrors], UserController.addUser);
-app.patch('/users/:id', [resourceIdValidator_1.resourceIdValidator('User'), ...userValidatiors_1.updateUserValidations, handleValidationErrors_1.handleValidationErrors], UserController.updateUser);
-app.delete('/users/:id', [resourceIdValidator_1.resourceIdValidator('User'), handleValidationErrors_1.handleValidationErrors], UserController.deleteUser);
 //# sourceMappingURL=App.js.map

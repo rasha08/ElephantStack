@@ -25,16 +25,17 @@ app.listen(port, () => {
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static(path.resolve( '../dist/elephantstock')));
-app.get('/', (req, res) => {
-  res.sendFile(path.resolve('../dist/elephantstock/index.html'));
-});
 
-app.get('/users', UserController.listUsers);
-app.get('/users/:id', UserController.showUser);
-app.post('/users', [...createUserValidations, handleValidationErrors], UserController.addUser);
+app.get('/api/users', UserController.listUsers);
+app.get('/api/users/:id', UserController.showUser);
+app.post('/api/users', [...createUserValidations, handleValidationErrors], UserController.addUser);
 app.patch(
-  '/users/:id',
+  '/api/users/:id',
   [resourceIdValidator('User'), ...updateUserValidations, handleValidationErrors],
   UserController.updateUser
 );
-app.delete('/users/:id', [resourceIdValidator('User'), handleValidationErrors], UserController.deleteUser);
+app.delete('/api/users/:id', [resourceIdValidator('User'), handleValidationErrors], UserController.deleteUser);
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.resolve('../dist/elephantstock/index.html'));
+});
