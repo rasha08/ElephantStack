@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "format:check": "prettier --config  ./.prettierrc --write src/**/**/*.ts"
+    "start:all": "npm i -g typescript &&  cd server && npm i && tsc && ls -a && node ./dist/server/src/App.js"
 },
   "private": true,
   "dependencies": {
